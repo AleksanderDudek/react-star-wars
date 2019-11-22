@@ -79,11 +79,11 @@
 			"allow-null-check"
 		],
 		"eofline": false,
-		"indent": [
-			true,
-            "tabs",
-            2
-		],
+		// "indent": [
+		// 	true,
+        //     "tabs",
+        //     2
+		// ],
 		"max-line-length": [
 			true,
 			250
