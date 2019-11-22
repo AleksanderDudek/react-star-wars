@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { mockedHuman1, mockedStarship1 } from '../../service/mockData';
+
+import '../../styles/game/game.scss';
+
 import clsx from 'clsx';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -17,6 +21,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
+import { getRandomHuman, getRandomStarship } from '../../service/httpClient';
+import Starship from 'models/Starship';
+import Human from 'models/Human';
+import GameArea from './GameArea';
 
 const drawerWidth = 240;
 
@@ -81,7 +89,32 @@ const useStyles = makeStyles((theme: Theme) =>
 function Game(): JSX.Element {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [player1Card, setPlayer1Card] = useState<Starship | Human>();
+  const [player2Card, setPlayer2Card] = useState<Starship | Human>();
+
+  getRandomHuman().then((json) => {
+    setPlayer1Card(mockedHuman1);
+    setPlayer2Card(mockedHuman1);
+    console.log(json);
+    console.log(player1Card);
+  });
+  // getRandomStarship().then((json: Starship) => console.log(json));
+  // getRandomHuman().then((json) => console.log(json));
+  // getRandomStarship().then((json) => console.log(json));
+  
+  useEffect(() => {
+    setPlayer1Card(mockedHuman1);
+    setPlayer2Card(mockedHuman1);
+  
+    console.log(player1Card);
+    console.log(player2Card);
+  }, []);
+
+  const handleClick = () => {
+    console.log(player1Card);
+    console.log(player2Card);
+  }
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -149,6 +182,8 @@ function Game(): JSX.Element {
       >
         <div className={classes.drawerHeader} />
         Game component will be here
+        <button onClick={handleClick}/>
+        <GameArea />
       </main>
     </div>
   );
