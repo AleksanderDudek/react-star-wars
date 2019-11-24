@@ -24,7 +24,7 @@
 //     url:https://swapi.co/api/starships/2/
 // }
 
-export default interface IStarship {
+export default interface IStarship extends Object {
     name: string;
     model: string;
     manufacturer: string;
@@ -44,3 +44,9 @@ export default interface IStarship {
     edited: string;
     url: string;
 }
+
+//type guard
+export const isStarship = (tbd: any) => {
+    if (tbd.cargo_capacity !== undefined) return true;
+    return false;
+  };

@@ -7,7 +7,7 @@
         height: 5rem;
         flex-direction: row;
         background-color: yellowgreen;
-        padding: 2rem;
+        padding: 0.5rem;
     }
 
     .players-container {
@@ -16,6 +16,12 @@
         height: 20rem;
         display: inline-flex;
         flex-direction: row;
+
+        &-disabled {
+            pointer-events: none;
+            opacity: 0.4;            
+        }
+
         &-one {
             //card 1 
             height: 18rem;
@@ -24,6 +30,7 @@
             padding: 1rem;
             margin: 1rem;
             width: 50%;
+            
         }
 
         &-two {
@@ -34,6 +41,10 @@
             padding: 1rem;
             margin: 1rem;
             width: 50%;
+        }
+
+        &-active {
+            border: solid 2px greenyellow;
         }
     }
 

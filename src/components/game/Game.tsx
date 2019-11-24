@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { mockedHuman1, mockedStarship1 } from '../../service/mockData';
+import React, { useState, useEffect, FC } from 'react';
 
 import '../../styles/game/game.scss';
+
+import { getRandomId } from '../../utils/utils';
 
 import clsx from 'clsx';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
@@ -22,9 +23,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import { getRandomHuman, getRandomStarship } from '../../service/httpClient';
-import Starship from 'models/Starship';
-import Human from 'models/Human';
+import Starship from '../../models/Starship';
+import Human, {isHuman} from '../../models/Human';
 import GameArea from './GameArea';
+
+const swapiUris = {
+  starShips: 'https://swapi.co/api/starships/',
+  humans: 'https://swapi.co/api/people/'
+};
 
 const drawerWidth = 240;
 
@@ -86,35 +92,98 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function Game(): JSX.Element {
+interface IProps {
+  isStarship: boolean;
+}
+
+function Game(props: IProps): JSX.Element {
+
+  const { isStarship } = props;
+
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [player1Card, setPlayer1Card] = useState<Starship | Human>();
-  const [player2Card, setPlayer2Card] = useState<Starship | Human>();
+  const [player1Card, setPlayer1Card] = useState<Starship | Human | null>(null);
+  const [player2Card, setPlayer2Card] = useState<Starship | Human | null>(null);
+  const [player1Score, setPlayer1Score] = useState(0);
+  const [player2Score, setPlayer2Score] = useState(0);
+  const [gameTurnsLeft, setGameTurnsLeft] = useState(5);
+  const [isPlayer1Turn, setIsPlayer1Turn] = useState(true);
+  const [isTurnFinished, setIsTurnFinished] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  getRandomHuman().then((json) => {
-    setPlayer1Card(mockedHuman1);
-    setPlayer2Card(mockedHuman1);
-    console.log(json);
-    console.log(player1Card);
-  });
-  // getRandomStarship().then((json: Starship) => console.log(json));
-  // getRandomHuman().then((json) => console.log(json));
-  // getRandomStarship().then((json) => console.log(json));
-  
   useEffect(() => {
-    setPlayer1Card(mockedHuman1);
-    setPlayer2Card(mockedHuman1);
-  
     console.log(player1Card);
     console.log(player2Card);
   }, []);
 
-  const handleClick = () => {
-    console.log(player1Card);
-    console.log(player2Card);
-  }
+  useEffect(() => {
+    if (!!player1Card && !!player2Card) {
+      whoWins();
+    }
+  }, [player1Card, player2Card]);
+
+  const whoWins = () => {
+    if (isHuman(player1Card)) {
+      if (player1Card.mass > player2Card.mass) {
+        setPlayer1Score(player1Score + 1);
+      } else if ((player1Card.mass < player2Card.mass)) {
+        setPlayer2Score(player2Score + 1);
+      } else {
+        //tie
+      }
+    } else {
+      if (player1Card.crew > player2Card.crew) {
+        setPlayer1Score(player1Score + 1);
+      } else if ((player1Card.crew < player2Card.crew)) {
+        setPlayer2Score(player2Score + 1);
+      } else {
+        //tie
+      }
+    }
+  };
+
+  const getRandomCard = (isPlayer1: boolean) => {
+    setIsLoading(true);
+    fetch(swapiUris.starShips).then(resp => resp.json()).then( data => {
+      const id = getRandomId();
+
+      if (isPlayer1) {
+        setPlayer1Card(data.results[id]);
+        setIsPlayer1Turn(false);
+      } else {
+        setPlayer2Card(data.results[id]);
+        setIsPlayer1Turn(true);
+      }
+      setIsLoading(false);
+    }).finally(() => {
+      setIsLoading(false);
+    });
+  };
+
+  const finishTurn = () => {
+    const nextTurn = gameTurnsLeft - 1;
+
+    if (nextTurn === 0) {
+    } else {
+      setGameTurnsLeft(nextTurn);
+      setIsTurnFinished(false);
+      setPlayer1Card(null);
+      setPlayer2Card(null);
+    }
+  };
+
+  const setWinner = (card1Value: string, card2Value: string) => {
+    if (card1Value > card2Value) {
+        setPlayer2Score(player2Score + 1);
+        return <span> PLAYER 2 WINS </span>;
+    } else if (card1Value < card2Value) {
+        setPlayer1Score(player1Score + 1);
+        return <span> PLAYER 1 WINS </span>;
+    } else {
+        return <span> IT IS A TIE </span>;
+    }
+}
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -181,9 +250,21 @@ function Game(): JSX.Element {
         })}
       >
         <div className={classes.drawerHeader} />
-        Game component will be here
-        <button onClick={handleClick}/>
-        <GameArea />
+        <GameArea
+          isPlayer1Turn={isPlayer1Turn}
+          player1Card={player1Card}
+          player2Card={player2Card}
+          player1Score={player1Score}
+          setPlayer1Score={setPlayer1Score}
+          player2Score={player2Score}
+          setPlayer2Score={setPlayer2Score}
+          gameTurnsLeft={gameTurnsLeft}
+          setGameTurnsLeft={setGameTurnsLeft}
+          getRandomCard={getRandomCard}
+          finishTurn={finishTurn}
+          isLoading={isLoading}
+          setWinner={setWinner}
+        />
       </main>
     </div>
   );

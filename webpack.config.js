@@ -52,7 +52,11 @@ module.exports = {
     ]
   },
   devServer: {
-    historyApiFallback: true,
+    historyApiFallback: true, 
+    inline: true, 
+    contentBase: './dist', 
+    port: 8080, 
+    proxy: { "/api/**": { target: 'http://localhost:8080', secure: false }  }
   },
   plugins: [
     new HtmlWebpackPlugin({

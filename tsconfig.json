@@ -8,6 +8,8 @@
 		"strictNullChecks": true,
 		// Search under node_modules for non-relative imports.
 		"moduleResolution": "node",
+		// do json -> ts xD
+		"resolveJsonModule": true,
 		// Process & infer types from .js files.
 		"allowJs": true,
 		// Don't emit; allow Babel to transform files.

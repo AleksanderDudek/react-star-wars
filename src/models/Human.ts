@@ -31,7 +31,7 @@
 //     "url":"https://swapi.co/api/people/2/"
 // }
 
-export default interface IHuman {
+export default interface IHuman extends Object {
     name: string;
     height: string;
     mass: string;
@@ -49,3 +49,9 @@ export default interface IHuman {
     edited: string;
     url: string;
 }
+
+ //type guard
+ export const isHuman = (tbd: any) => {
+    if (tbd.gender !== undefined) return true;
+    return false;
+  };
