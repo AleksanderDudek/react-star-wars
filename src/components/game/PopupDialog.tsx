@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import '../../styles/game/game.scss';
+
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import Starship from '../../models/Starship';
@@ -46,7 +48,7 @@ function PopupDialog(props: IProps) {
   return (
     <Dialog aria-labelledby='simple-dialog-title' open={openDialog} onClose={handleClose}>
       <DialogTitle id='simple-dialog-title'>TURN RESULT</DialogTitle>
-      <div>
+      <div style={{ padding: '1.5rem'}}>
         { shouldBeActive ? renderBody() : null }
       </div>
     </Dialog>

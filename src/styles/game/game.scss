@@ -8,6 +8,13 @@
         flex-direction: row;
         background-color: yellowgreen;
         padding: 0.5rem;
+        .score-board {
+            display: flex;
+            justify-content: center;
+            span {
+                justify-self: center;
+            }
+        }
     }
 
     .players-container {

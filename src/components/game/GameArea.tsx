@@ -14,11 +14,8 @@ interface IProps {
     player1Card: Human | Starship | null;
     player2Card: Human | Starship | null;
     player1Score: number;
-    setPlayer1Score: React.Dispatch<React.SetStateAction<number>>;
     player2Score: number;
-    setPlayer2Score: React.Dispatch<React.SetStateAction<number>>;
     gameTurnsLeft: number;
-    setGameTurnsLeft: React.Dispatch<React.SetStateAction<number>>;
     getRandomCard: Function;
     finishTurn: Function;
     isLoading: boolean;

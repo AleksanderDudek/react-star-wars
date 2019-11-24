@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     maxWidth: 345
   },
   media: {
-    height: 140
+    height: 125
   }
 });
 
@@ -48,8 +48,9 @@ function PlayerCard(props: IProps): JSX.Element {
     <Card className={classes.card}>
       <CardActionArea>
         <CardMedia
-          className={classes.media}
-          image={ props.isPlayer1 ? '../../../assets/player1_1000_500.jpg' : '../../../assets/player2_1000_500.jpg'}
+          // className={classes.media}
+          style={{height: '125px'}}
+          image={ props.isPlayer1 ? ('../../../assets/player1_1000_500.jpg') : '../../../assets/player2_1000_500.jpg'}
         />
         <CardContent>
           <Typography gutterBottom variant='h6' component='h4'>

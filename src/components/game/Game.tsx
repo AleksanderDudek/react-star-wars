@@ -22,10 +22,14 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
-import { getRandomHuman, getRandomStarship } from '../../service/httpClient';
+
+//promise return error, not yet solved
+// import { getRandomHuman, getRandomStarship } from '../../service/httpClient';
+
 import Starship from '../../models/Starship';
 import Human, {isHuman} from '../../models/Human';
 import GameArea from './GameArea';
+import EndGameDialog from './EndGameDIalog';
 
 const swapiUris = {
   starShips: 'https://swapi.co/api/starships/',
@@ -92,13 +96,15 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface IProps {
-  isStarship: boolean;
-}
+// interface IProps {
+//   isStarship: boolean;
+// }
 
-function Game(props: IProps): JSX.Element {
+function Game(props: any): JSX.Element {
 
-  const { isStarship } = props;
+  const isStarship = props.location.state.isStarship;
+
+  const shouldBeActive = !!player1Card && !!player2Card;
 
   const classes = useStyles();
   const theme = useTheme();
@@ -107,21 +113,22 @@ function Game(props: IProps): JSX.Element {
   const [player2Card, setPlayer2Card] = useState<Starship | Human | null>(null);
   const [player1Score, setPlayer1Score] = useState(0);
   const [player2Score, setPlayer2Score] = useState(0);
-  const [gameTurnsLeft, setGameTurnsLeft] = useState(5);
+  const [gameTurnsLeft, setGameTurnsLeft] = useState(3);
   const [isPlayer1Turn, setIsPlayer1Turn] = useState(true);
-  const [isTurnFinished, setIsTurnFinished] = useState(false);
+  const [isGameFinished, setIsGameFinished] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    console.log(player1Card);
-    console.log(player2Card);
-  }, []);
 
   useEffect(() => {
     if (!!player1Card && !!player2Card) {
       whoWins();
     }
   }, [player1Card, player2Card]);
+
+  useEffect(() => {
+    if (gameTurnsLeft === 0) {
+      setIsGameFinished(true);
+    }
+  }, [gameTurnsLeft]);
 
   const whoWins = () => {
     if (isHuman(player1Card)) {
@@ -143,34 +150,55 @@ function Game(props: IProps): JSX.Element {
     }
   };
 
+  const resetGame = () => {
+    setOpen(false);
+    setPlayer1Card(null);
+    setPlayer2Card(null);
+    setPlayer1Score(0);
+    setPlayer2Score(0);
+    setGameTurnsLeft(3);
+    setIsPlayer1Turn(true);
+    setIsGameFinished(false);
+    setIsLoading(false);
+  };
+
+  const anotherGame = () => {
+    resetGame();
+    props.history.push('/');
+  };
+
   const getRandomCard = (isPlayer1: boolean) => {
     setIsLoading(true);
-    fetch(swapiUris.starShips).then(resp => resp.json()).then( data => {
-      const id = getRandomId();
+    const url = isStarship ? swapiUris.starShips : swapiUris.humans;
+    const id = getRandomId();
+
+    //something strange happens from time to time to this SWAPI
+    //data sometimes do not find object with given id
+    // fetch(url + id + '/').then(resp => resp.json()).then( data => {
+      fetch(url).then(resp => resp.json()).then( data => {
+
+      // const card = data;
+      const card = data.results[id];
 
       if (isPlayer1) {
-        setPlayer1Card(data.results[id]);
+        setPlayer1Card(card);
         setIsPlayer1Turn(false);
       } else {
-        setPlayer2Card(data.results[id]);
+        setPlayer2Card(card);
         setIsPlayer1Turn(true);
       }
       setIsLoading(false);
-    }).finally(() => {
+    }).catch(() => {
       setIsLoading(false);
     });
   };
 
   const finishTurn = () => {
+    if ( gameTurnsLeft === 0 ) return;
     const nextTurn = gameTurnsLeft - 1;
-
-    if (nextTurn === 0) {
-    } else {
-      setGameTurnsLeft(nextTurn);
-      setIsTurnFinished(false);
-      setPlayer1Card(null);
-      setPlayer2Card(null);
-    }
+    setGameTurnsLeft(nextTurn);
+    setPlayer1Card(null);
+    setPlayer2Card(null);
   };
 
   const setWinner = (card1Value: string, card2Value: string) => {
@@ -233,11 +261,11 @@ function Game(props: IProps): JSX.Element {
         </div>
         <Divider />
         <List>
-            <ListItem button key={'another-game'}>
+            <ListItem button key={'another-game'} onClick={() => anotherGame()}>
               <ListItemIcon>{<SportsEsportsIcon />}</ListItemIcon>
               <ListItemText primary={'Another game'} />
             </ListItem>
-            <ListItem button key={'reset-game'}>
+            <ListItem button key={'reset-game'} onClick={() => resetGame()}>
               <ListItemIcon>{<RotateLeftIcon />}</ListItemIcon>
               <ListItemText primary={'Reset game'} />
             </ListItem>
@@ -250,16 +278,18 @@ function Game(props: IProps): JSX.Element {
         })}
       >
         <div className={classes.drawerHeader} />
+        <EndGameDialog
+          open={isGameFinished}
+          score1={player1Score}
+          score2={player2Score}
+        />
         <GameArea
           isPlayer1Turn={isPlayer1Turn}
           player1Card={player1Card}
           player2Card={player2Card}
           player1Score={player1Score}
-          setPlayer1Score={setPlayer1Score}
           player2Score={player2Score}
-          setPlayer2Score={setPlayer2Score}
           gameTurnsLeft={gameTurnsLeft}
-          setGameTurnsLeft={setGameTurnsLeft}
           getRandomCard={getRandomCard}
           finishTurn={finishTurn}
           isLoading={isLoading}

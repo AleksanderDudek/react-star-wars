@@ -27,10 +27,12 @@ const shouldBeDisabled = (isPlayer1Turn && !isPlayer1 || !isPlayer1Turn && isPla
 
 const shouldDisplayCard = isPlayer1 && player1Card || !isPlayer1 && player2Card;
 
+const shouldDisplayLoading = (isPlayer1Turn && isPlayer1 || !isPlayer1Turn && !isPlayer1) && isLoading;
+
 return (
     <div className={ shouldBeDisabled ? 'players-container-disabled' : '' }>
     {
-        isLoading
+        shouldDisplayLoading
             ? <div>
                 <Progress />
             </div>

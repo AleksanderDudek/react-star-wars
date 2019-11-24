@@ -25,11 +25,21 @@ const handleClose = () => {
 };
 
 const handleStarships = () => {
-    props.history.push('/game');
+    // props.history.push('/game');
+
+    props.history.push({
+      pathname: '/game',
+      state: { isStarship: true }
+    });
 };
 
 const handleHumans = () => {
-    props.history.push('/game');
+    // props.history.push('/game');
+
+    props.history.push({
+      pathname: '/game',
+      state: { isStarship: false }
+    });
 };
 
 return (
