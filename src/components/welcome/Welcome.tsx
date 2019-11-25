@@ -12,21 +12,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 function Welcome(props: any): JSX.Element {
 
-console.log(props);
-
 const [open, setOpen] = useState(true);
-
-const handleClickOpen = () => {
-  setOpen(true);
-};
 
 const handleClose = () => {
   setOpen(false);
 };
 
 const handleStarships = () => {
-    // props.history.push('/game');
-
     props.history.push({
       pathname: '/game',
       state: { isStarship: true }
@@ -34,8 +26,6 @@ const handleStarships = () => {
 };
 
 const handleHumans = () => {
-    // props.history.push('/game');
-
     props.history.push({
       pathname: '/game',
       state: { isStarship: false }

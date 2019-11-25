@@ -29,7 +29,7 @@ import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import Starship from '../../models/Starship';
 import Human, {isHuman} from '../../models/Human';
 import GameArea from './GameArea';
-import EndGameDialog from './EndGameDIalog';
+import EndGameDialog from './EndGameDialog';
 
 const swapiUris = {
   starShips: 'https://swapi.co/api/starships/',
