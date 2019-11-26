@@ -28,10 +28,10 @@ return (
             <span> GAME TURNS LEFT: { gameTurnsLeft } </span>
             </div>
         <div>
-            <button disabled={ !shouldBeActive } onClick={ () => finishTurn() }>NEXT TURN</button>
+            <button id='next-turn' disabled={ !shouldBeActive } onClick={ () => finishTurn() }>NEXT TURN</button>
         </div>
         <div>
-            <button disabled={ !shouldFinishGame } onClick={ () => finishGame() }>FINISH GAME</button>
+            <button id='finish-game' disabled={ !shouldFinishGame } onClick={ () => finishGame() }>FINISH GAME</button>
         </div>
     </div>
     );

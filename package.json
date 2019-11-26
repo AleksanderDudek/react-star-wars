@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "bundle": "webpack",
-    "test": "jest --config ./jest.config.js",
+    "test": "jest --config ./jest.config.js --verbose",
     "start": "webpack-dev-server --mode development --open --hot",
     "check-types": "tsc"
   },

@@ -47,3 +47,17 @@ export const mockedCharacter1 = {
         "https://swapi.co/api/vehicles/14/"
     ]
 }
+
+export const initialGameMock = {
+    open: false,
+    isPlayer1: true,
+    player1Card: null,
+    player2Card: null,
+    player1Score: 0,
+    player2Score: 0,
+    gameTurnsLeft: 3,
+    isPlayer1Turn: true,
+    isGameFinished: false,
+    isLoading: false,
+    shouldFinishGame: false
+};

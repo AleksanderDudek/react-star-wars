@@ -57,10 +57,17 @@ return (
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleStarships} color='primary'>
+        <Button
+          id='starships'
+          onClick={handleStarships}
+          color='primary'>
             STARSHIPS
         </Button>
-        <Button onClick={handleCharacters} color='primary' autoFocus>
+        <Button
+          id='humans'
+          onClick={handleCharacters}
+          color='primary'
+          autoFocus>
             HUMANS
         </Button>
       </DialogActions>

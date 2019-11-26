@@ -1,19 +1,18 @@
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import * as React from 'react';
 
-import App from '../src/components/App';
 import Welcome from '../src/components/welcome/Welcome';
-import { Button } from '@material-ui/core';
+// import { Button } from '@material-ui/core';
 
-describe('<Welcome />', () => {
+describe('Welcome component ', () => {
+   const testComponent = mount(<Welcome/>);
 
-   it('displays 2 buttons for navigation: STARSHIPS and HUMANS', () => {
-      const app = mount(<Welcome/>);
-      
+   it('should display 2 buttons for navigation: STARSHIPS and HUMANS', () => {
+      const starshipButton = testComponent.find('button#starships');
+      const humanButton = testComponent.find('button#humans');
 
-
-      expect(true).toEqual(true);
-      // expect(app.find(Welcome).find(Button).text()).toEqual('STARSHIPS');
+      expect(starshipButton).toBeTruthy();
+      expect(humanButton).toBeTruthy();
    });
 
 });
