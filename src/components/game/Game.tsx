@@ -205,18 +205,6 @@ function Game(props: any): JSX.Element {
     setPlayer2Card(null);
   };
 
-  const setWinner = (card1Value: string, card2Value: string) => {
-    if (card1Value > card2Value) {
-        setPlayer2Score(player2Score + 1);
-        return <span> PLAYER 2 WINS </span>;
-    } else if (card1Value < card2Value) {
-        setPlayer1Score(player1Score + 1);
-        return <span> PLAYER 1 WINS </span>;
-    } else {
-        return <span> IT IS A TIE </span>;
-    }
-}
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };

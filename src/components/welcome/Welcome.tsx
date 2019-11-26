@@ -14,10 +14,6 @@ function Welcome(props: any): JSX.Element {
 
 const [open, setOpen] = useState(true);
 
-const handleClose = () => {
-  setOpen(false);
-};
-
 const handleStarships = () => {
     props.history.push({
       pathname: '/game',
@@ -42,7 +38,6 @@ return (
     </div>
     <Dialog
       open={open}
-      onClose={handleClose}
       aria-labelledby='alert-dialog-title'
       aria-describedby='alert-dialog-description'
     >
