@@ -24,16 +24,16 @@ import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 
 //promise return error, not yet solved
-// import { getRandomHuman, getRandomStarship } from '../../service/httpClient';
+// import { getRandomCharacter, getRandomStarship } from '../../service/httpClient';
 
 import Starship from '../../models/Starship';
-import Human, {isHuman} from '../../models/Human';
+import Character, {isCharacter} from '../../models/Character';
 import GameArea from './GameArea';
 import EndGameDialog from './EndGameDialog';
 
 const swapiUris = {
   starShips: 'https://swapi.co/api/starships/',
-  humans: 'https://swapi.co/api/people/'
+  characters: 'https://swapi.co/api/people/'
 };
 
 const drawerWidth = 240;
@@ -109,8 +109,8 @@ function Game(props: any): JSX.Element {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [player1Card, setPlayer1Card] = useState<Starship | Human | null>(null);
-  const [player2Card, setPlayer2Card] = useState<Starship | Human | null>(null);
+  const [player1Card, setPlayer1Card] = useState<Starship | Character | null>(null);
+  const [player2Card, setPlayer2Card] = useState<Starship | Character | null>(null);
   const [player1Score, setPlayer1Score] = useState(0);
   const [player2Score, setPlayer2Score] = useState(0);
   const [gameTurnsLeft, setGameTurnsLeft] = useState(3);
@@ -131,7 +131,7 @@ function Game(props: any): JSX.Element {
   }, [gameTurnsLeft]);
 
   const whoWins = () => {
-    if (isHuman(player1Card)) {
+    if (isCharacter(player1Card)) {
       if (player1Card.mass > player2Card.mass) {
         setPlayer1Score(player1Score + 1);
       } else if ((player1Card.mass < player2Card.mass)) {
@@ -169,7 +169,7 @@ function Game(props: any): JSX.Element {
 
   const getRandomCard = (isPlayer1: boolean) => {
     setIsLoading(true);
-    const url = isStarship ? swapiUris.starShips : swapiUris.humans;
+    const url = isStarship ? swapiUris.starShips : swapiUris.characters;
     const id = getRandomId();
 
     //something strange happens from time to time to this SWAPI

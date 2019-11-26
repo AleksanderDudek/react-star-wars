@@ -21,7 +21,7 @@ export const mockedStarship1 = {
     url: "https://swapi.co/api/starships/9/"
 }
 
-export const mockedHuman1 = {
+export const mockedCharacter1 = {
     birth_year: "19 BBY",
     eye_color: "Blue",
     films: [

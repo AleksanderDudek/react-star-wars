@@ -1,4 +1,4 @@
-// example data response for Human
+// example data response for Character
 // {
 //     "name":"C-3PO",
 //     "height":"167",
@@ -31,7 +31,7 @@
 //     "url":"https://swapi.co/api/people/2/"
 // }
 
-export default interface IHuman extends Object {
+export default interface ICharacter extends Object {
     name: string;
     height: string;
     mass: string;
@@ -51,7 +51,7 @@ export default interface IHuman extends Object {
 }
 
  //type guard
- export const isHuman = (tbd: any) => {
+ export const isCharacter = (tbd: any) => {
     if (tbd.gender !== undefined) return true;
     return false;
   };

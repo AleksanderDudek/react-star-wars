@@ -5,14 +5,14 @@ import '../../styles/game/game.scss';
 import PlayerArea from './PlayerArea';
 import GameState from './GameState';
 import Starship from 'models/Starship';
-import Human from 'models/Human';
+import Character from 'models/Character';
 
 import PopupDialog from './PopupDialog';
 
 interface IProps {
     isPlayer1Turn: boolean;
-    player1Card: Human | Starship | null;
-    player2Card: Human | Starship | null;
+    player1Card: Character | Starship | null;
+    player2Card: Character | Starship | null;
     player1Score: number;
     player2Score: number;
     gameTurnsLeft: number;

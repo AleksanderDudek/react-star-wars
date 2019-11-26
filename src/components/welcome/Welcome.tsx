@@ -25,7 +25,7 @@ const handleStarships = () => {
     });
 };
 
-const handleHumans = () => {
+const handleCharacters = () => {
     props.history.push({
       pathname: '/game',
       state: { isStarship: false }
@@ -60,7 +60,7 @@ return (
         <Button onClick={handleStarships} color='primary'>
             STARSHIPS
         </Button>
-        <Button onClick={handleHumans} color='primary' autoFocus>
+        <Button onClick={handleCharacters} color='primary' autoFocus>
             HUMANS
         </Button>
       </DialogActions>

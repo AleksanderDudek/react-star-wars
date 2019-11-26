@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import PlayerCard from './PlayerCard';
 import Starship from 'models/Starship';
-import Human from 'models/Human';
+import Character from 'models/Character';
 import Progress from '../../utils/Progress';
 
 import '../../styles/game/game.scss';
@@ -11,8 +11,8 @@ import '../../styles/game/game.scss';
 interface IProps {
     isPlayer1: boolean;
     isPlayer1Turn: boolean;
-    player1Card: Human | Starship | null;
-    player2Card: Human | Starship | null;
+    player1Card: Character | Starship | null;
+    player2Card: Character | Starship | null;
     getRandomCard: Function;
     isLoading: boolean;
 }

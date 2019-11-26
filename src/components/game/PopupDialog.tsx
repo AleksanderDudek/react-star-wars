@@ -5,12 +5,12 @@ import '../../styles/game/game.scss';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import Starship from '../../models/Starship';
-import Human, { isHuman } from '../../models/Human';
+import Character, { isCharacter } from '../../models/Character';
 
 interface IProps {
   open: boolean;
-  player1Card: Human | Starship | null;
-  player2Card: Human | Starship | null;
+  player1Card: Character | Starship | null;
+  player2Card: Character | Starship | null;
   shouldBeActive: boolean;
 }
 
@@ -24,7 +24,7 @@ function PopupDialog(props: IProps) {
   }, [open]);
 
   function renderBody () {
-    if (isHuman(player1Card)) {
+    if (isCharacter(player1Card)) {
         return whoWins(player1Card.mass, player2Card.mass);
     } else {
         return whoWins(player1Card.crew, player2Card.crew);

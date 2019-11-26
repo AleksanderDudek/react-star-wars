@@ -7,7 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Starship from '../../models/Starship';
-import Human, { isHuman } from '../../models/Human';
+import Character, { isCharacter } from '../../models/Character';
 
 const useStyles = makeStyles({
   card: {
@@ -20,8 +20,8 @@ const useStyles = makeStyles({
 
 interface IProps {
   isPlayer1: boolean;
-  player1Card: Human | Starship | null;
-  player2Card: Human | Starship | null;
+  player1Card: Character | Starship | null;
+  player2Card: Character | Starship | null;
 }
 
 function PlayerCard(props: IProps): JSX.Element {
@@ -38,9 +38,9 @@ function PlayerCard(props: IProps): JSX.Element {
 
   function renderBody () {
     if (isPlayer1) {
-      return <div>{ isHuman(player1Card) ? <span>Mass: {player1Card.mass}</span>  : <span>Crew: {player1Card.crew}</span> }</div>;
+      return <div>{ isCharacter(player1Card) ? <span>Mass: {player1Card.mass}</span>  : <span>Crew: {player1Card.crew}</span> }</div>;
     } else {
-      return <div>{ isHuman(player2Card) ? <span>Mass: {player2Card.mass}</span>  : <span>Crew: {player2Card.crew}</span> }</div>;
+      return <div>{ isCharacter(player2Card) ? <span>Mass: {player2Card.mass}</span>  : <span>Crew: {player2Card.crew}</span> }</div>;
     }
   }
 
