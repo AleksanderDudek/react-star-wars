@@ -18,16 +18,18 @@ interface IProps {
     gameTurnsLeft: number;
     getRandomCard: Function;
     finishTurn: Function;
+    finishGame: Function;
     isLoading: boolean;
-    setWinner: Function;
 }
 
 function GameArea(props: IProps): JSX.Element {
 
 const { isPlayer1Turn, getRandomCard, player1Card, player2Card, player1Score,
-    player2Score, gameTurnsLeft, finishTurn, isLoading } = props;
+    player2Score, gameTurnsLeft, finishTurn, isLoading, finishGame } = props;
 
-const shouldBeActive = !!player1Card && !!player2Card;
+const shouldBeActive = !!player1Card && !!player2Card && gameTurnsLeft > 1;
+const shouldFinishGame = !!player1Card && !!player2Card && gameTurnsLeft === 1;
+
 
 return (
 <div className='game-area'>
@@ -44,6 +46,8 @@ return (
             gameTurnsLeft={gameTurnsLeft}
             shouldBeActive={shouldBeActive}
             finishTurn={finishTurn}
+            finishGame={finishGame}
+            shouldFinishGame={shouldFinishGame}
         />
     </div>
     <div className='players-container'>

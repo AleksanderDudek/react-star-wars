@@ -104,10 +104,9 @@ function Game(props: any): JSX.Element {
 
   const isStarship = props.location.state.isStarship;
 
-  const shouldBeActive = !!player1Card && !!player2Card;
-
   const classes = useStyles();
   const theme = useTheme();
+
   const [open, setOpen] = useState(false);
   const [player1Card, setPlayer1Card] = useState<Starship | Character | null>(null);
   const [player2Card, setPlayer2Card] = useState<Starship | Character | null>(null);
@@ -124,11 +123,11 @@ function Game(props: any): JSX.Element {
     }
   }, [player1Card, player2Card]);
 
-  useEffect(() => {
-    if (gameTurnsLeft === 0) {
-      setIsGameFinished(true);
-    }
-  }, [gameTurnsLeft]);
+  // useEffect(() => {
+  //   if (gameTurnsLeft === 0) {
+  //     setIsGameFinished(true);
+  //   }
+  // }, [gameTurnsLeft]);
 
   const whoWins = () => {
     if (isCharacter(player1Card)) {
@@ -148,6 +147,11 @@ function Game(props: any): JSX.Element {
         //tie
       }
     }
+  };
+
+  const finishGame = () => {
+    setGameTurnsLeft(0);
+    setIsGameFinished(true);
   };
 
   const resetGame = () => {
@@ -194,7 +198,7 @@ function Game(props: any): JSX.Element {
   };
 
   const finishTurn = () => {
-    if ( gameTurnsLeft === 0 ) return;
+    if ( gameTurnsLeft === 1 ) return;
     const nextTurn = gameTurnsLeft - 1;
     setGameTurnsLeft(nextTurn);
     setPlayer1Card(null);
@@ -292,8 +296,8 @@ function Game(props: any): JSX.Element {
           gameTurnsLeft={gameTurnsLeft}
           getRandomCard={getRandomCard}
           finishTurn={finishTurn}
+          finishGame={finishGame}
           isLoading={isLoading}
-          setWinner={setWinner}
         />
       </main>
     </div>
