@@ -1,12 +1,14 @@
-//this is the thing that will contain single player card, manage turns by clicking
+// this is the thing that will contain single player card, manage turns by clicking
 
 import React, { useState } from 'react';
 import PlayerCard from './PlayerCard';
 import Starship from 'models/Starship';
 import Character from 'models/Character';
 import Progress from '../../utils/Progress';
+import Button from '../../utils/Button';
 
 import '../../styles/game/game.scss';
+import { Chip } from '@material-ui/core';
 
 interface IProps {
     isPlayer1: boolean;
@@ -33,15 +35,20 @@ return (
     <div className={ shouldBeDisabled ? 'players-container-disabled' : '' }>
     {
         shouldDisplayLoading
-            ? <div>
-                <Progress />
-            </div>
+            ? <Progress />
             : <div>
                 {
                 !shouldDisplayCard ?
                     <div>
-                        <h2>{ isPlayer1 ? 'Player 1' : 'Player 2'}</h2>
-                        <button onClick={() => getRandomCard(isPlayer1)}>Get card!</button>
+                        <Chip
+                            label={isPlayer1 ? 'Player 1' : 'Player 2'}
+                            color='secondary'
+                        />
+                        <Button
+                            onClick={() => getRandomCard(isPlayer1)}
+                            text={'Get card!'}
+                            disabled={false}
+                        />
                     </div>
                     :
                     <PlayerCard

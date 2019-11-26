@@ -1,8 +1,11 @@
-//this will contain score and number of turns left
+// this will contain score and number of turns left
 
 import React from 'react';
 
 import '../../styles/game/game.scss';
+
+import Button from '../../utils/Button';
+import { Chip } from '@material-ui/core';
 
 interface IProps {
     player1Score: number;
@@ -21,17 +24,59 @@ const { player1Score, player2Score, gameTurnsLeft, finishTurn, shouldBeActive, f
 return (
     <div className={'score-board'}>
         <div>
-            <span> GAME STATE </span>
-            <br />
-            <span> PLAYER1 { player1Score } : { player2Score } PLAYER2</span>
-            <br />
-            <span> GAME TURNS LEFT: { gameTurnsLeft } </span>
+            <div className={'element'}>
+            <Chip
+                label={'GAME STATE'}
+                color='secondary'
+            />
             </div>
-        <div>
-            <button id='next-turn' disabled={ !shouldBeActive } onClick={ () => finishTurn() }>NEXT TURN</button>
+            <div className={'element'}>
+                <Chip
+                    label={'PLAYER1'}
+                    color='primary'
+                />
+                <Chip
+                    label={player1Score}
+                    color='secondary'
+                />
+                <Chip
+                    label={':'}
+                    color='primary'
+                />
+                <Chip
+                    label={player2Score}
+                    color='secondary'
+                />
+                <Chip
+                    label={'PLAYER2'}
+                    color='primary'
+                />
+            </div>
+            <div className={'element'}>
+                <Chip
+                    label={'GAME TURNS LEFT'}
+                    color='secondary'
+                />
+                <Chip
+                    label={gameTurnsLeft}
+                    color='primary'
+                />
+            </div>
         </div>
-        <div>
-            <button id='finish-game' disabled={ !shouldFinishGame } onClick={ () => finishGame() }>FINISH GAME</button>
+
+        <div className={'button-area'}>
+            <Button
+                id='next-turn'
+                disabled={ !shouldBeActive }
+                onClick={ finishTurn }
+                text={'NEXT TURN'}
+            />
+            <Button
+                id='finish-game'
+                disabled={ !shouldFinishGame }
+                onClick={ finishGame }
+                text={'FINISH GAME'}
+            />
         </div>
     </div>
     );
